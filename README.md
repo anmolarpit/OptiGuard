@@ -1,194 +1,219 @@
+# OptiGuard
 
-#  OptiGuard
+## Zero-Trust Cyber-Physical Security & Behavioral Threat Detection Platform
 
-**Zero-Trust Physical Override System for Smart Grids**
+OptiGuard is a next-generation security platform designed to protect critical infrastructure and sensitive digital environments through a combination of:
 
-##  Overview
+- Zero-Trust Physical Verification
+- Cyber-Physical Security
+- Independent Hardware Validation
+- Behavioral Anomaly Detection
+- Real-Time Telemetry Monitoring
+- Machine Learning
+- Security Event Monitoring
+- Audit Logging
+- Real-Time Alerting
 
-OptiGuard is a cyber-physical security system designed to protect smart power distribution infrastructure from malicious cyberattacks. Instead of trusting software alone, OptiGuard follows a **Zero-Trust Architecture** by independently verifying the physical state of electrical equipment before allowing critical operations.
+Instead of trusting software commands or user credentials alone, OptiGuard continuously evaluates both the **physical state of critical infrastructure** and the **behavioral patterns of users interacting with sensitive digital resources**.
 
-Even if an attacker compromises the central SCADA system, OptiGuard's isolated hardware controller can detect suspicious behavior and physically prevent unauthorized switching operations.
+The platform therefore operates across two complementary security layers:
 
----
+```text
+┌─────────────────────────────────────────────────────────────┐
+│                       OPTIGUARD                             │
+│        ZERO-TRUST CYBER-PHYSICAL SECURITY PLATFORM          │
+├─────────────────────────────┬───────────────────────────────┤
+│                             │                               │
+│   PAGE 1                    │   PAGE 2                      │
+│   Physical Security         │   Behavioral Security         │
+│                             │                               │
+│   Zero-Trust Physical       │   Behavioral Anomaly          │
+│   Override System           │   Detection                   │
+│                             │                               │
+│   ESP32 + Sensors + Servo   │   ML + Navigation Analytics   │
+│                             │                               │
+└─────────────────────────────┴───────────────────────────────┘
+#Tech Stack
+Optiguard-2/
+│
+├── 📁 assets/                              # Static project media assets
+│
+├── 📁 src/                                 # Main Frontend Application Source Code
+│   ├── 📄 main.tsx                         # React application entry point (DOM mount)
+│   ├── 📄 App.tsx                          # Root dashboard controller & layout switcher
+│   ├── 📄 index.css                        # Global CSS, SCADA CRT scanlines & theme variables
+│   ├── 📄 types.ts                         # System telemetry, state, & sensor data contracts
+│   │
+│   ├── 📁 components/                      # UI Components Layer
+│   │   │
+│   │   ├── 📄 TopCommandBar.tsx            # Header bar with system status, sound, simulators & view switcher
+│   │   │
+│   │   ├── 📁 3d/                          # 3D Digital Twin Module
+│   │   │   └── 📄 PerimeterTwinPanel.tsx   # Interactive 3D perimeter canvas with optical laser beams
+│   │   │
+│   │   ├── 📁 anomaly/                     # Insider Threat & Biometrics Anomaly Detection Module
+│   │   │   ├── 📄 AnomalyDetectionPanel.tsx # Live dual file explorer UI & trajectory canvas
+│   │   │   ├── 📄 choreographyEngine.ts    # Biometric scoring algorithms & Fitts's law calculations
+│   │   │   ├── 📄 anomalyDetection.css     # Clean white theme styling for anomaly dashboard
+│   │   │   └── 📄 types.ts                 # Anomaly vector coordinates & session interfaces
+│   │   │
+│   │   ├── 📁 telemetry/                   # Real-time Telemetry Gauges Module
+│   │   │   └── 📄 TelemetryFeedPanel.tsx   # Optical sensor readings, power metrics & health gauges
+│   │   │
+│   │   ├── 📁 controls/                    # SCADA Manual Override Module
+│   │   │   └── 📄 ManualOverridePanel.tsx  # Physical lockdown, laser calibration, & threshold controls
+│   │   │
+│   │   └── 📁 logs/                        # Threat Intelligence & Audit Logs Module
+│   │       └── 📄 LogsThreatPanel.tsx      # Real-time threat feed, breach events & incident logs
+│   │
+│   └── 📁 services/                        # Logic & Audio Synthesis Engine
+│       └── 📄 telemetryEngine.ts           # Web Audio API sound synthesizer & telemetry generator
+│
+├── 📁 firmware/ (Optional)                 # Hardware / ESP32 MicroPython scripts (main.py, boot.py)
+│
+├── 📄 index.html                           # Root HTML document
+├── 📄 package.json                         # Project dependencies, scripts & metadata
+├── 📄 package-lock.json                    # Exact dependency lockfile
+├── 📄 tsconfig.json                        # TypeScript compiler options
+├── 📄 vite.config.ts                       # Vite bundler & dev server configuration
+├── 📄 vercel.json                          # Vercel deployment routing configuration
+├── 📄 .gitignore                           # Git ignore rules (ignores node_modules & dist)
+└── 📄 .env.example                         # Environment variables template
 
-##  Problem Statement
 
-Modern smart grids rely heavily on SCADA systems to monitor and control substations remotely. If an attacker gains administrative access, they can issue malicious commands that:
+1. Project Overview
 
-* Open or close circuit breakers remotely
-* Cause repeated switching operations
-* Damage electrical equipment
-* Trigger widespread power outages
-* Hide malicious activity from operators
+OptiGuard is designed around the principle:
+
+Never trust software or user intent alone — independently verify behavior and physical reality.
+
+The platform combines two security mechanisms.
+
+Layer 1 — Zero-Trust Physical Override
+
+Protects smart-grid and industrial infrastructure by independently verifying the physical state of electrical equipment.
+
+The system continuously compares:
+
+Software Commands
+Physical Sensor Readings
+Hardware State
+Cryptographic Authentication
+
+If suspicious or unauthorized activity is detected, OptiGuard can activate a physical locking mechanism using an ESP32-controlled servo motor.
+
+Layer 2 — Behavioral Anomaly Detection
+
+Analyzes how users navigate sensitive digital resources, rather than relying only on what files they access.
+
+The system identifies statistically unusual navigation behavior that may indicate reconnaissance or malicious insider activity.
+
+These two layers allow OptiGuard to detect threats at both the:
+
+DIGITAL BEHAVIOR LEVEL
+        +
+PHYSICAL CONTROL LEVEL
+2. Problem Statement
+
+Modern critical infrastructure and enterprise systems increasingly rely on software-controlled environments.
+
+In smart grids, SCADA systems can remotely control substations and circuit breakers.
+
+If an attacker compromises a SCADA system, they may:
+
+Open or close circuit breakers remotely
+Cause repeated switching operations
+Damage electrical equipment
+Trigger widespread power outages
+Hide malicious activity from operators
 
 Traditional software firewalls become ineffective once the control system itself has been compromised.
 
----
+At the same time, organizations face insider threats where legitimate users may use valid credentials to access sensitive information.
 
-##  Our Solution
+Traditional security systems generally focus on:
 
-OptiGuard introduces an independent hardware verification layer between the SCADA system and the physical switch.
+WHO is accessing the resource?
+WHAT data is being accessed?
 
-Instead of trusting digital commands alone, the system continuously compares:
+OptiGuard adds another question:
 
-* Software Commands
-* Physical Sensor Readings
-* Hardware State
-* Cryptographic Authentication
+HOW is the user behaving while accessing the resource?
 
-If the system detects suspicious or unauthorized activity, it immediately engages a physical locking mechanism using an ESP32-controlled servo motor, preventing unsafe operations.
+This enables the system to detect behavioral patterns associated with reconnaissance before potential data exfiltration occurs.
 
----
+3. Our Solution
 
-##  Key Features
+OptiGuard introduces an independent security layer between digital commands, user behavior and physical systems.
 
-* Zero-Trust Security Architecture
-* Independent Hardware Verification
-* Physical Deadbolt Protection
-* Real-Time Telemetry Monitoring
-* Live Dashboard
-* REST API Backend
-* PostgreSQL Database
-* Audit Logging
-* Alert Management
-* ESP32 Integration
-* WebSocket-Based Live Updates
+The platform operates through two major modules.
 
----
+Module 1 — Zero-Trust Physical Override System
 
-##  System Architecture
+Instead of trusting digital commands alone, OptiGuard continuously compares:
+Software Command
+       ↓
+Hardware State
+       ↓
+Physical Sensor Reading
+       ↓
+Telemetry
+       ↓
+Cryptographic Validation
+       ↓
+Security Decision
 
-```text
-                Operator Dashboard
-                       │
-                       ▼
-               Spring Boot Backend
-              REST API + WebSocket
-              │                 │
-              ▼                 ▼
-        PostgreSQL Database   ESP32 Controller
-                                  │
-                                  ▼
-                       Sensors + Servo Lock
-                                  │
-                                  ▼
-                      Physical Grid Switch
-```
+35. Project Vision
 
----
+OptiGuard demonstrates how modern cyber-physical security can combine:
 
-##  Technology Stack
+SECURE SOFTWARE
+        +
+INDEPENDENT HARDWARE VERIFICATION
+        +
+REAL-TIME TELEMETRY
+        +
+BEHAVIORAL MACHINE LEARNING
+        +
+CONTINUOUS SECURITY MONITORING
 
-### Backend
+into a unified Zero-Trust security platform.
 
-* Java 21
-* Spring Boot
-* Spring Data JPA
-* Spring Security
-* WebSocket
+The long-term vision is to create a security architecture capable of protecting both:
 
-### Database
+Critical Physical Infrastructure
 
-* PostgreSQL
+and
 
-### Frontend
+Sensitive Digital Environments
 
-* React / Next.js
+by continuously validating not only:
 
-### Hardware
+What the system is commanded to do
 
-* ESP32
-* Servo Motor
-* Infrared Sensor
-* Toggle Switch
+but also:
 
-### Tools
+What the physical system is actually doing
 
-* Git
-* GitHub
-* Postman
-* Maven
+and:
 
----
+How users are behaving while interacting with sensitive resources.
 
-##  Repository Structure
+OptiGuard
+Observe. Verify. Detect. Protect.
 
-```text
-OptiGuard/
-│
-├── backend/
-├── frontend/
-├── firmware/
-├── database/
-├── docs/
-├── hardware/
-├── assets/
-│
-├── README.md
-├── LICENSE
-└── .gitignore
-```
+Zero-Trust Cyber-Physical Security + Behavioral Threat Detection
 
----
 
-##  Documentation
+### Important integration change
 
-Documentation is available inside the **docs/** directory.
+I would recommend presenting the second page in the actual website as **“Behavioral Security”** or **“Behavioral Anomaly Detection”**, rather than calling it *NaviThreat*. The material you supplied uses “NaviThreat” inside the differentiation section, but the rest of your project is branded **OptiGuard**. Keeping NaviThreat would make it look like a separate product.
 
-* API Documentation
-* Database Design
-* Architecture
-* Diagrams
-* Presentation Material
+The resulting website concept becomes particularly strong:
 
----
+**Page 1:** 🛡️ **Zero-Trust Physical Security** — ESP32 + sensor + servo + SCADA + physical override
 
-##  Getting Started
+**Page 2:** 🧠 **Behavioral Anomaly Detection** — mouse/navigation telemetry + Isolation Forest + anomaly score + session replay
 
-Clone the repository:
+This gives OptiGuard a much broader security story: **it protects both the physical infrastructure and the human/digital interaction layer.**
 
-```bash
-git clone https://github.com/<your-username>/OptiGuard.git
-```
-
-Each module contains its own setup instructions.
-
-* `backend/`
-* `frontend/`
-* `firmware/`
-
----
-
-##  Team
-
-| Role                  | Responsibility                             |
-| ------------------    | ------------------------------------------ |
-| Anmol Arpit           | Spring Boot, PostgreSQL, APIs, Integration |
-| Preeti Moitra         | Dashboard UI                               |
-| Anirban Biswas        | ESP32 Firmware                             |
-| Priyanka Dutta Banik  | Sensors & Servo Integration                |
-
----
-
-##  Development Phases
-
-*  Phase 1 — Architecture & Project Setup
-*  Phase 2 — PostgreSQL & Spring Data JPA
-*  Phase 3 — REST APIs & Telemetry
-*  Phase 4 — Zero-Trust Detection Engine
-*  Phase 5 — Integration & Demo
-
----
-
-##  License
-
-This project is licensed under the MIT License.
-
----
-
-##  Project Vision
-
-OptiGuard demonstrates how cyber-physical systems can defend critical infrastructure by combining secure software, independent hardware verification, and real-time monitoring into a single Zero-Trust platform.
-=======
-# OptiGuard
->>>>>>> a076793c263d96d98fee6b9b6f84b83451687538
