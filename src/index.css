@@ -1,0 +1,284 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #0b0f17;
+    color: #cbd5e1;
+    overflow-x: hidden;
+  }
+
+  code, kbd, samp, pre, .font-mono {
+    font-family: 'JetBrains Mono', 'Share Tech Mono', monospace;
+  }
+}
+
+/* Custom Tactical SCADA Utility Classes */
+.font-tech {
+  font-family: 'Share Tech Mono', 'JetBrains Mono', monospace;
+}
+
+.scada-grid-bg {
+  background-size: 24px 24px;
+  background-image: 
+    linear-gradient(to right, rgba(29, 38, 54, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(29, 38, 54, 0.4) 1px, transparent 1px);
+}
+
+.scada-grid-dense {
+  background-size: 12px 12px;
+  background-image: 
+    linear-gradient(to right, rgba(29, 38, 54, 0.25) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(29, 38, 54, 0.25) 1px, transparent 1px);
+}
+
+.scada-panel {
+  background-color: #0d121c;
+  border: 1px solid #1d2636;
+  border-radius: 2px; /* Sharp clean industrial corners */
+}
+
+/* Tactical Corner Bracket Accents */
+.corner-brackets {
+  position: relative;
+}
+.corner-brackets::before,
+.corner-brackets::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+}
+.corner-brackets::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid #30d158;
+  border-left: 2px solid #30d158;
+}
+.corner-brackets::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid #30d158;
+  border-right: 2px solid #30d158;
+}
+
+/* Custom Scrollbar for Terminals & Telemetry */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #090d14;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Pulsing LED keyframes */
+@keyframes pulse-fast {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.92); }
+}
+
+.animate-pulse-fast {
+  animation: pulse-fast 0.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes laser-glow {
+  0%, 100% { opacity: 0.95; filter: drop-shadow(0 0 4px #ff3333); }
+  50% { opacity: 0.6; filter: drop-shadow(0 0 1px #ff0000); }
+}
+
+.animate-laser {
+  animation: laser-glow 1.2s ease-in-out infinite;
+}
+
+/* CRT Scanline effect toggle class */
+.crt-scanlines::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 20;
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* ==========================================
+   NEUTRAL LIGHT THEME (#FFFFFF Pure White)
+   HIGH COLOR CONTRAST (WCAG AAA Readability)
+   - Dark Slate / Pure Black Typography (#0F172A / #000000)
+   - Deep Green (#15803D), Deep Amber (#C2410C), Deep Crimson (#DC2626), Deep Sky (#0284C7)
+   - Crisp Sharp Borders (#CBD5E1 / #94A3B8)
+   ========================================== */
+
+body.theme-light {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+body.theme-light .scada-panel {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+}
+
+body.theme-light .scada-panel > div:first-child {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+body.theme-light .scada-panel > div:first-child span,
+body.theme-light .scada-panel > div:first-child button {
+  color: #0f172a !important;
+}
+
+body.theme-light .corner-brackets::before,
+body.theme-light .corner-brackets::after {
+  border-color: #0055ff !important;
+}
+
+body.theme-light .scada-grid-bg,
+body.theme-light .scada-grid-dense {
+  background-image: none !important;
+  background-color: #ffffff !important;
+}
+
+/* Background overrides for containers, cards, and canvas wrappers */
+body.theme-light .bg-\[\#080d16\],
+body.theme-light .bg-\[\#090d15\],
+body.theme-light .bg-\[\#06090f\],
+body.theme-light .bg-\[\#05070a\],
+body.theme-light .bg-\[\#04070d\],
+body.theme-light .bg-\[\#0a0f19\],
+body.theme-light .bg-\[\#0d121c\],
+body.theme-light .bg-\[\#05080f\],
+body.theme-light .bg-\[\#060a12\] {
+  background-color: #ffffff !important;
+}
+
+body.theme-light .bg-\[\#0c1320\],
+body.theme-light .bg-\[\#0e1624\],
+body.theme-light .bg-\[\#050911\] {
+  background-color: #ffffff !important;
+  border-color: #475569 !important; /* Sharp slate border for maximum definition */
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12) !important;
+}
+
+/* Border High Contrast Overrides */
+body.theme-light .border-\[\#1d2636\],
+body.theme-light .border-\[\#1c293c\],
+body.theme-light .border-\[\#172436\],
+body.theme-light .border-\[\#141e2e\],
+body.theme-light .border-\[\#1b2434\],
+body.theme-light .border-\[\#1d283b\],
+body.theme-light .border-\[\#1d2d46\],
+body.theme-light .border-\[\#2b3e5a\],
+body.theme-light .border-slate-700,
+body.theme-light .border-slate-800 {
+  border-color: #64748b !important;
+}
+
+/* High Contrast Text Overrides */
+body.theme-light .text-white,
+body.theme-light .text-slate-100,
+body.theme-light .text-slate-200,
+body.theme-light .text-slate-300,
+body.theme-light .text-\[\#f0f0f0\] {
+  color: #0f172a !important;
+  font-weight: 800 !important;
+}
+
+body.theme-light .text-slate-400,
+body.theme-light .text-slate-500,
+body.theme-light .text-slate-600 {
+  color: #1e293b !important;
+  font-weight: 700 !important;
+}
+
+/* Status Color High Contrast Adjustments on White */
+body.theme-light .text-\[\#30d158\],
+body.theme-light .text-emerald-300,
+body.theme-light .text-emerald-400,
+body.theme-light .text-emerald-500 {
+  color: #15803d !important; /* High contrast dark green */
+}
+
+body.theme-light .text-\[\#ff9f0a\],
+body.theme-light .text-amber-300,
+body.theme-light .text-amber-400,
+body.theme-light .text-amber-500 {
+  color: #c2410c !important; /* High contrast dark orange */
+}
+
+body.theme-light .text-\[\#ff453a\],
+body.theme-light .text-red-300,
+body.theme-light .text-red-400,
+body.theme-light .text-red-500 {
+  color: #dc2626 !important; /* High contrast crimson red */
+}
+
+body.theme-light .text-sky-300,
+body.theme-light .text-sky-400,
+body.theme-light .text-sky-500 {
+  color: #0284c7 !important; /* High contrast blue */
+}
+
+/* Badges & Accent Pill High-Contrast Backgrounds */
+body.theme-light .bg-\[\#30d158\]\/10 {
+  background-color: #f0fdf4 !important;
+  border-color: #86efac !important;
+}
+
+body.theme-light .bg-\[\#ff9f0a\]\/10 {
+  background-color: #fff7ed !important;
+  border-color: #fdba74 !important;
+}
+
+body.theme-light .bg-\[\#ff453a\]\/10,
+body.theme-light .bg-\[\#ff453a\]\/20 {
+  background-color: #fef2f2 !important;
+  border-color: #fca5a5 !important;
+}
+
+body.theme-light .crt-scanlines::after {
+  display: none !important;
+}
+
+/* High contrast interactive buttons */
+body.theme-light button.bg-\[\#121824\],
+body.theme-light button.bg-slate-900 {
+  background-color: #ffffff !important;
+  border-color: #94a3b8 !important;
+  color: #0f172a !important;
+}
+
+body.theme-light button.bg-\[\#121824\]:hover,
+body.theme-light button.bg-slate-900:hover {
+  background-color: #f1f5f9 !important;
+  border-color: #0f172a !important;
+}
+
+/* High-contrast form controls & selects */
+body.theme-light select,
+body.theme-light input {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #94a3b8 !important;
+}
+
+body.theme-light ::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+body.theme-light ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+
